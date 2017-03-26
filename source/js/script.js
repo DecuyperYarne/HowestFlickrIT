@@ -23,7 +23,7 @@ var showSearch = function (e) {
         dataType: 'json'
     }).done(function (gegevens) {
         var getUser = {
-            method: 'flickr.profile.getProfile',
+            method: 'flickr.people.getInfo',
             format: 'json',
             api_key: flickrAPIkey,
             user_id: '',
@@ -43,12 +43,7 @@ var showSearch = function (e) {
                 data: getUser,
                 dataType: 'json'
             }).done(function (person) {
-                if (null == person.profile.first_name && null == person.profile.last_name) {
-                    author = "<p class='muted'>Unknown artist</p>";
-                } else {
-                    var fullName = person.profile.first_name + " " + person.profile.last_name;
-                    author = "<a href='#' data-name='" + fullName + "' data-authid='" + person.profile.id + "' class='author'>" + fullName + "</a>";
-                }
+                author = "<a href='#' data-name='" + person.person.username._content + "' data-authid='" + person.person.id + "' class='author'>" + person.person.username._content + "</a>";
 
                 if (title == "") {
                     title = "No title given";
