@@ -4,7 +4,7 @@
 var flickrAPIkey = "6ea2f2fba887b0a93a2b3f37f62b28f9";
 
 var showSearch = function (e) {
-    $("#content").html("").prepend('<article class="hide"></article>');
+    $("#content").html("").prepend('<article class="hide"><h1>Validate</h1></article>');
     var html;
     var tag = $("#search").val();
     var getPhoto = {
@@ -47,7 +47,7 @@ var showSearch = function (e) {
                     author = "<p class='muted'>Unknown artist</p>";
                 } else {
                     var fullName = person.profile.first_name + " " + person.profile.last_name;
-                    author = "<a href='#' data-name='" + fullName + "' data-authid='" + person.profile.id + "' id='author'>" + fullName + "</a>";
+                    author = "<a href='#' data-name='" + fullName + "' data-authid='" + person.profile.id + "' class='author'>" + fullName + "</a>";
                 }
 
                 if (title == "") {
@@ -58,7 +58,7 @@ var showSearch = function (e) {
                 html += '<figure class="cf"><div class="img-wrapper">';
                 html += '<img src="' + imgsrc + '"></div>';
                 html += '<figcaption>';
-                html += '<a href="#" id="location" data-title="' + title + '" data-fotoid="' + photoid + '" class="goright"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i></a>';
+                html += '<a href="#" data-title="' + title + '" data-fotoid="' + photoid + '" class="goright location"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i></a>';
                 html += '<p>' + title + '</p>';
                 html += author;
                 html += '</figcaption></figure>';
@@ -74,7 +74,7 @@ var showAuthor = function (e) {
     var html;
     var author = $(this).attr("data-authid");
     var fullname = $(this).attr("data-name");
-    $("#content").html("").append("<h1>More pictures from " + fullname + "</h1>").append("<article class='hide'></article>");
+    $("#content").html("").append("<h1>More pictures from " + fullname + "</h1>").append("<article class='hide'><h2>Validate</h2></article>");
 
     var getPhotoUser = {
         method: 'flickr.people.getPublicPhotos',
@@ -103,7 +103,7 @@ var showAuthor = function (e) {
             html += '<figure class="cf"><div class="img-wrapper">';
             html += '<img src="' + imgsrc + '"></div>';
             html += '<figcaption>';
-            html += '<a href="#" id="location" data-title="' + title + '" data-fotoid="' + photoid + '" class="goright"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i></a>';
+            html += '<a href="#" data-title="' + title + '" data-fotoid="' + photoid + '" class="goright location"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i></a>';
             html += '<p>' + title + '</p>';
             html += '</figcaption></figure>';
 
@@ -143,7 +143,7 @@ var showLocation = function (e) {
                 zoom: 7
             });
         } else {
-            var modal = "<h1>No location available for " + title + "</h1>";
+            var modal = "<h2>No location available for " + title + "</h2>";
             modal += "<p>We are sorry for the inconvenience</p>";
 
             $("article").removeClass().html(modal).fadeIn();
@@ -154,6 +154,6 @@ var showLocation = function (e) {
 
 $(document).ready(function () {
     $("#send").on("click", showSearch);
-    $("#content").on("click", '#author', showAuthor);
-    $("#content").on("click", "#location", showLocation);
+    $("#content").on("click", '.author', showAuthor);
+    $("#content").on("click", ".location", showLocation);
 });
